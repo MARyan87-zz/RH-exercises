@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Exercises 1,2, and 3</title>
+</head>
+<body>
+<p>Max Chars: <span id="max-chars">100</span></p>
+<textarea maxlength="100" id="text-field" onkeyup="textAreaHandler()" rows=10 cols=50></textarea>
+</body>
+<script type="text/javascript">
+	var maxCharsEl = document.getElementById("max-chars");
+	
+	// Define a function to run on onkeyup event for textarea
+	function textAreaHandler () {
+		var textField = document.getElementById("text-field"),
+			numCharsLeft = 100 - textField.value.length;
+
+		// Ternary handles changing color to red under 5, also back to black if text is erased
+		numCharsLeft <= 5 ? maxCharsEl.style.color = "red" : maxCharsEl.style.color = "black";	
+		maxCharsEl.innerHTML = numCharsLeft;
+	}
+</script>
+</html>
