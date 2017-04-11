@@ -13,7 +13,6 @@ Router.get("/getUsers", function (req, res) {
 		} else {
 			res.json(body);
 		}
-		
 	})
 });
 
