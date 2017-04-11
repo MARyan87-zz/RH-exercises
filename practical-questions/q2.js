@@ -2,10 +2,7 @@ function remoteMathService(cb) {
 	var one;
     var two;
 	
-	callOneService(function(err, num) {		/* The problem is this code is asynchronous, and will continue to run
-											   and return the callback function on line 14 before the service functions 
-											   complete.  Solution is to call each function inside the prior functions 
-											   callback so they will only run when the prior function is finished. */
+	callOneService(function(err, num) {		
 		one = num;
 	 	
 	 	callTwoService(function(err, num) {
@@ -50,4 +47,9 @@ function testMathService (expected) {
 
 testMathService(3); // Passes
 testMathService(2); // Fails
+
+/* The problem is this code is asynchronous, and will continue to run
+   and return the callback function on line 14 before the service functions 
+   complete.  Solution is to call each function inside the prior functions 
+   callback so they will only run when the prior function is finished. */
 
