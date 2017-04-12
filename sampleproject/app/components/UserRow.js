@@ -8,7 +8,7 @@ class UserRow extends React.Component {
 
   render() {
     return (
-      <section className="row">
+      <section className="row userRow">
           <Name userName={this.props.userName} name={this.props.name} />
           <UserName userName={this.props.userName} />
           <Email email={this.props.email} />

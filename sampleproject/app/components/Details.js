@@ -29,7 +29,7 @@ class Details extends React.Component {
       <section className="row well">
       	  <p className="col-xs-12"><a href="/">Back to all users</a></p>
 	      <section className="col-xs-6">
-	        <h1>User Details</h1>
+	        <h1 id="user-details">User Details</h1>
 	        <h3>Name: {this.state.selectedUser.name} (ID: {this.state.selectedUser.id})</h3>
 	        <h4>Username: {this.state.selectedUser.username}</h4>
 	      </section>

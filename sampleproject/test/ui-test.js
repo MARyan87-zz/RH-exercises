@@ -1,30 +1,28 @@
 'use strict';
 
-var Nightmare = require('nightmare'),
-	should = require('chai').should(),
+var Nightmare = require("nightmare"),
+	should = require("chai").should(),
 	exec = require("child_process").exec,
 	spawn = require("child_process").spawn;
 
 exec("node ../server.js");
-console.log("spawned");
-describe('Sample UI Tests', function() {
+
+describe("Test Users Page", function() {
   
   this.timeout(10000);
-  it('should show users when loaded', function(done) {
+  it("should load the page", function(done) {
     var nightmare = new Nightmare({
       show: true
     });
     nightmare
-      .goto('http://google.com')
-      .wait('a[href*="https://frontendmasters.com/login/"]')
-      .click('a[href*="https://frontendmasters.com/login/"]')
-      .wait('#rcp_user_login')
-      .evaluate(function() {
-        return document.title;
+      .goto("http://localhost:3000")
+      .wait("section.userRow")
+      .evaluate(function () {
+      	return document.title
       })
       .end()
-      .then(function(result) {
-        result.should.equal('Login to Frontend Masters');
+      .then(function(title) {
+        result.should.equal("Sample Project");
         done();
       })
       .catch(function(err) {
@@ -32,30 +30,44 @@ describe('Sample UI Tests', function() {
       });
   });
 
-  it('should present multiple workshop choices after login', function(done) {
+  it("should display user rows", function(done) {
     var nightmare = new Nightmare({
       show: true
     });
-    var login = '#menu-item-112';
+   
     nightmare
-      .goto('https://frontendmasters.com/')
-      .wait('a[href*="https://frontendmasters.com/login/"]')
-      .click('a[href*="https://frontendmasters.com/login/"]')
-      .wait('#rcp_user_login')
-      .type('#rcp_user_login', 'PelekeS')
-      .type('#rcp_user_pass', 'password')
-      .click('#rcp_login_submit')
-      .wait('.course-list-item-alt')
       .evaluate(function() {
-        return document.querySelectorAll('div.course-list-item-alt').length;
+        return document.querySelector("section.userRow").length;
       })
       .end()
-      .then(function(course_count) {
-        course_count.should.be.above(1);
+      .then(function(userCount) {
+        userCount.should.be.above(0);
         done();
       })
       .catch(function(err) {
         console.error(err);
       });
   });
+
+  it("should show user info when user's name is clicked", function(done) {
+  	var nightmare = new Nightmare({
+  	  show:true
+  	});
+  	var userRows = document.querySelector("section.userRow"),
+  		userDetails = document.getElementById("user-details");
+
+  	nightmare
+  	  .click(userRows[0])
+  	  .wait(userDetails)
+  	  .evaluate(function() {
+  	  	return document.getElementById(userDetails).innerHTML
+  	  })
+  	  .end()
+  	  .then(function (h1Title) {
+  	  	h1Title.should.be("User Details");
+  	  })
+  	  .catch(function (err) {
+  	  	console.error(err);
+  	  })
+  })
 });
